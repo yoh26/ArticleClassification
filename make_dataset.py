@@ -17,7 +17,6 @@ categories_dict = {'business':'0',
                    'technology':'6'}
 
 # Create a news title dataset
-
 # Get top headlines by each category
 news_title_dataset = []
 for category, category_num in categories_dict.items():
@@ -31,6 +30,7 @@ for category, category_num in categories_dict.items():
         one_title_dataset.append(category_num)
         news_title_dataset.append(one_title_dataset)
 
+# write dataset
 with open('Dataset.txt', mode='a') as f:
     for one_dataset in news_title_dataset:
         one_pair = ' '.join(one_dataset) + '\n'
