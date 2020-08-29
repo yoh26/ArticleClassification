@@ -1,4 +1,5 @@
 from newsapi import NewsApiClient
+import re
 
 # read apikey
 apikey = ''
@@ -26,9 +27,13 @@ for category, category_num in categories_dict.items():
     # [[title, category_num], ...]
     for article in top_headlines['articles']:
         one_title_dataset = []
-        one_title_dataset.append(article['title'].strip(' '))
-        one_title_dataset.append(category_num)
-        news_title_dataset.append(one_title_dataset)
+        # remove source name
+        source_indexes = [m.start() for m in re.finditer(r' - ', article['title'])]
+        if len(source_indexes) == 1:
+            title = re.sub(' - .+', '', article['title'])
+            one_title_dataset.append(title.strip(' '))
+            one_title_dataset.append(category_num)
+            news_title_dataset.append(one_title_dataset)
 
 # write dataset
 with open('Dataset.txt', mode='a') as f:
