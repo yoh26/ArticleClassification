@@ -1,4 +1,4 @@
 newsapi_apikey.txt
 tmp/*
 Dataset.txt
-
+__pycache__/*
