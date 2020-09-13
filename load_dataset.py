@@ -1,4 +1,6 @@
 import pandas as pd
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
 def read_dataset(filename):
     '''read dataset file
@@ -51,8 +53,31 @@ def clean_dataset(dataset):
 
     return title, category
 
-def cleanse_dataset(filename):
+def remove_stopwords(titles):
+    '''remove stopwords from titles
+
+    # Argument
+    	titles = titles of dataset
+        
+    # Return
+    	removed_stopwords_titles = titles of removing stopwords
+    '''
+    # get stopwords
+    stop_words = set(stopwords.words('english'))
+
+    removed_stopwords_titles = []
+
+    # remove stopwords
+    for title in titles:
+        word_tokens = word_tokenize(title)
+        removed_stopwords_title = [w for w in word_tokens if not w in stop_words]
+        removed_stopwords_titles.append(' '.join(removed_stopwords_title))
+
+    return removed_stopwords_titles
+
+def load_dataset(filename):
     dataset = read_dataset(filename)
-    title, category = clean_dataset(dataset)
+    titles, categories = clean_dataset(dataset)
+    removed_stopwords_titles = remove_stopwords(titles)
     
-    return title, category
+    return removed_stopwords_titles, categories
