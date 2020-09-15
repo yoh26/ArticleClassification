@@ -1,9 +1,25 @@
+import tensorflow as tf
 from sklearn.model_selection import train_test_split
-'''
-ToDo
-1. データを分割する
-2. モデル作成
-'''
+
+def tokenize(titles):
+    '''convert to sequences (integer)
+
+    # Arguments
+    	titles = titles of dataset
+
+    # Returns
+    	lists of sequences
+
+    '''
+    # initialize Tokenizer
+    tokenizer = tf.keras.preprocessing.text.Tokenizer(filters='')
+    tokenizer.fit_on_texts(titles)
+
+    # create tensor and padding
+    tensor = tokenizer.texts_to_sequences(titles)
+    tensor = tf.keras.preprocessing.sequence.pad_sequences(tensor, padding='post')
+
+    return tensor
 
 def split_dataset(titles, categories):
     '''split dataset
