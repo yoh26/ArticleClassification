@@ -24,17 +24,17 @@ def tokenize(titles):
 
     return tensor, config
 
-def split_dataset(titles, categories):
+def split_dataset(tensor, categories):
     '''split dataset
 
     # Arguments
-    	titles = titles of dataset
+    	tensor = converted matrix from titles
         categories = categories of dataset
 
     # Returns
     	train and test dataset
     '''
-    X_train, X_test, Y_train, Y_test = train_test_split(titles, categories, train_size=0.8, random_state=42, shuffle=True)
+    X_train, X_test, Y_train, Y_test = train_test_split(tensor, categories, train_size=0.8, random_state=42, shuffle=True)
 
     return X_train, X_test, Y_train, Y_test
 
@@ -51,3 +51,31 @@ def convert_to_dict(config, key):
     dictionary = ast.literal_eval(config[key])
 
     return dictionary
+
+def concatenate_dataset(titles, categories):
+    '''make dataset pairs (title, category)
+
+    # Arguments
+    	titles = titles of dataset
+        categories = categories of dataset
+
+    # Return
+    	dataset pairs(tuple)
+    '''
+    concatenated_dataset = tf.data.Dataset.from_tensor_slices((titles, categories))
+
+    return concatenated_dataset
+
+def to_batch(dataset, batch_size):
+    '''split dataset to batches
+
+    # Arguments
+    	dataset = title and category pairs
+        batch_size = batch size
+
+    # Return
+    	batches
+    '''
+    batch = dataset.batch(batch_size)
+
+    return batch
