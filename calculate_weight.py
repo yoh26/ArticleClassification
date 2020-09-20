@@ -13,13 +13,13 @@ tensor, config = preprocess.tokenize(titles)
 X_train, X_test, Y_train, Y_test = preprocess.split_dataset(tensor, categories)
 
 # make dataset pairs (title, category)
-train_dataset = preprocess.concatenate_dataset(X_train, Y_train)
-test_dataset = preprocess.concatenate_dataset(X_test, Y_test)
+train_dataset = tf.data.Dataset.from_tensor_slices((X_train, Y_train))
+test_dataset = tf.data.Dataset.from_tensor_slices((X_test, Y_test))
 
 # split dataset to batches
 BATCH_SIZE = 64
-train_dataset = preprocess.to_batch(train_dataset, BATCH_SIZE)
-test_dataset = preprocess.to_batch(test_dataset, BATCH_SIZE)
+train_dataset = train_dataset.batch(BATCH_SIZE)
+test_dataset = test_dataset.batch(BATCH_SIZE)
 
 # word and index mapping dictionaries
 index_word = preprocess.convert_to_dict(config, 'index_word')

@@ -51,31 +51,3 @@ def convert_to_dict(config, key):
     dictionary = ast.literal_eval(config[key])
 
     return dictionary
-
-def concatenate_dataset(titles, categories):
-    '''make dataset pairs (title, category)
-
-    # Arguments
-    	titles = titles of dataset
-        categories = categories of dataset
-
-    # Return
-    	dataset pairs(tuple)
-    '''
-    concatenated_dataset = tf.data.Dataset.from_tensor_slices((titles, categories))
-
-    return concatenated_dataset
-
-def to_batch(dataset, batch_size):
-    '''split dataset to batches
-
-    # Arguments
-    	dataset = title and category pairs
-        batch_size = batch size
-
-    # Return
-    	batches
-    '''
-    batch = dataset.batch(batch_size)
-
-    return batch
