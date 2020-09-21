@@ -1,6 +1,7 @@
+import tensorflow as tf
 import load_dataset as load
 import preprocess
-import tensorflow as tf
+from categorizing_model import CModel
 
 # load dataset
 titles, categories = load.load_dataset('Dataset.txt')
@@ -25,8 +26,12 @@ test_dataset = test_dataset.batch(BATCH_SIZE)
 index_word = preprocess.convert_to_dict(config, 'index_word')
 word_index = preprocess.convert_to_dict(config, 'word_index')
 
-'''
-メモ
-embeddingの引数は単語辞書の長さ
-'''
+model = CModel(len(index_word), 64)
+model.assemble()
+model.compile()
+history = model.fit(train_dataset, test_dataset)
+test_loss, test_acc = model.evaluate()
+print(test_loss)
+print(test_acc)
+
 s = input()
