@@ -2,10 +2,14 @@ import tensorflow as tf
 import load_dataset as load
 import preprocess
 from categorizing_model import CModel
-
+import debug_util as dutil
+'''
+ToDo
+シンプルなモデルを試す
+'''
 # load dataset
 titles, categories = load.load_dataset('Dataset.txt')
-
+#dutil.to_file(titles, 'titles.txt')
 assert len(titles) == len(categories), 'Not match each length'
 
 tensor, config = preprocess.tokenize(titles)
@@ -26,7 +30,7 @@ test_dataset = test_dataset.batch(BATCH_SIZE)
 index_word = preprocess.convert_to_dict(config, 'index_word')
 word_index = preprocess.convert_to_dict(config, 'word_index')
 
-model = CModel(len(index_word), 64)
+model = CModel(len(index_word), 32)
 model.assemble()
 model.compile()
 history = model.fit(train_dataset, test_dataset)

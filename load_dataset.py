@@ -47,7 +47,11 @@ def clean_dataset(dataset):
     
     # replace all numbers to 0
     df_dataset['title'] = df_dataset['title'].replace('[0-9]', '0', regex=True)
-    
+
+    # remove single quotation
+    df_dataset['title'] = df_dataset['title'].replace("'s", '', regex=True)
+    df_dataset['title'] = df_dataset['title'].replace("'", '', regex=True)
+
     title = df_dataset['title'].to_numpy()
     category = df_dataset['category'].to_numpy()
 
