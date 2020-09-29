@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import collections
 
 # function --------------------------------------------------------------
 
@@ -60,3 +61,6 @@ titles, labels = read_dataset('Dataset.txt')
 #plot_title_length_distribution(titles, BINS)
 
 #print_each_bin(titles, BINS)
+
+# print each number of labels
+#print(sorted(collections.Counter(labels).items()))
