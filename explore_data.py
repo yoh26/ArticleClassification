@@ -54,13 +54,38 @@ def print_each_bin(titles, bins):
     for index, hist in enumerate(hists):
         print('length of a title {0}: {1}'.format(index + 1, hist))
 
+def plot_word_count_distribution(titles):
+    '''plots the word counts distribution
+
+    # Argument
+        titles: list, titles of dataset
+    '''
+    lower_titles = list(map(str.lower, titles))
+    joined_titles = ' '.join(lower_titles)
+    counter = collections.Counter(joined_titles.split())
+    sorted_words = counter.most_common(30)
+
+    words = []
+    counts = []
+    for count_pair in sorted_words:
+        word, count = count_pair
+        words.append(word)
+        counts.append(count)
+
+    plt.bar(words, counts)
+    plt.xlabel('Words')
+    plt.ylabel('Counts')
+    plt.title('Frequency distribution of words')
+    plt.xticks(rotation=45)
+    plt.show()
+
 # function --------------------------------------------------------------
 
 titles, labels = read_dataset('Dataset.txt')
-
 #plot_title_length_distribution(titles, BINS)
 
 #print_each_bin(titles, BINS)
 
 # print each number of labels
 #print(sorted(collections.Counter(labels).items()))
+#plot_word_count_distribution(titles)
