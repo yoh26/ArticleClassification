@@ -16,7 +16,7 @@ class CModel():
         #GlobalAveragePooling1Dのほうが性能よかった
         model.add(tf.keras.layers.GlobalAveragePooling1D())
         model.add(tf.keras.layers.Dense(self.hidden_units, activation='softmax'))
-        model.add(tf.keras.layers.Dense(7))
+        model.add(tf.keras.layers.Dense(6))
 
         self.model = model
 
