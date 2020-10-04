@@ -8,7 +8,9 @@ ToDo
 シンプルなモデルを試す
 '''
 # load dataset
-titles, categories = load.load_dataset('Dataset.txt')
+#FILENAME = 'Dataset.txt'
+FILENAME = 'Dataset_without_general.txt'
+titles, categories = load.load_dataset(FILENAME)
 #dutil.to_file(titles, 'titles.txt')
 assert len(titles) == len(categories), 'Not match each length'
 

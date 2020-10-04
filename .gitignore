@@ -3,3 +3,4 @@ tmp/*
 Dataset.txt
 __pycache__/*
 debug_util.py
+Dataset_without_general.txt
