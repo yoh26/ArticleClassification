@@ -132,10 +132,10 @@ def export_dataset_without_general_title(titles, labels):
                                 })
     
         dataset = dataset[dataset.labels != 2]
-        dataset.replace({'labels': {3:2}})
-        dataset.replace({'labels': {4:3}})
-        dataset.replace({'labels': {5:4}})
-        dataset.replace({'labels': {6:5}})
+        dataset.replace({'labels': {3:2}}, inplace=True)
+        dataset.replace({'labels': {4:3}}, inplace=True)
+        dataset.replace({'labels': {5:4}}, inplace=True)
+        dataset.replace({'labels': {6:5}}, inplace=True)
 
         cat_dataset = dataset['titles'].str.cat(dataset['labels'].astype('str'), sep=' ').to_list()
         f.write('\n'.join(cat_dataset))
