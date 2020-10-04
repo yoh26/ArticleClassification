@@ -120,6 +120,26 @@ def adjust_dataset_length(titles, labels):
     adjusted_labels = dataset['labels'].values.tolist()
 
     return adjusted_titles, adjusted_labels
+
+def export_dataset_without_general_title(titles, labels):
+    '''
+    label2(general)データ以外をファイル出力する
+    ## この関数は最後に削除すること ##
+    '''
+    with open('Dataset_without_general.txt', mode='w') as f:
+        dataset = pd.DataFrame({'titles': titles,
+                                'labels': labels
+                                })
+    
+        dataset = dataset[dataset.labels != 2]
+        dataset.replace({'labels': {3:2}})
+        dataset.replace({'labels': {4:3}})
+        dataset.replace({'labels': {5:4}})
+        dataset.replace({'labels': {6:5}})
+
+        cat_dataset = dataset['titles'].str.cat(dataset['labels'].astype('str'), sep=' ').to_list()
+        f.write('\n'.join(cat_dataset))
+
 # function --------------------------------------------------------------
 
 titles, labels = read_dataset('Dataset.txt')
@@ -130,4 +150,5 @@ titles, labels = read_dataset('Dataset.txt')
 # print each number of labels
 #print(sorted(collections.Counter(labels).items()))
 #plot_word_count_distribution(titles)
-titles, labels = adjust_dataset_length(titles, labels)
+#titles, labels = adjust_dataset_length(titles, labels)
+#export_dataset_without_general_title(titles, labels)
