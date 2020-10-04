@@ -1,4 +1,5 @@
 import tensorflow as tf
+import pandas as pd
 import load_dataset as load
 import preprocess
 from categorizing_model import CModel
@@ -10,21 +11,19 @@ ToDo
 # load dataset
 #FILENAME = 'Dataset.txt'
 FILENAME = 'Dataset_without_general.txt'
-titles, categories = load.load_dataset(FILENAME)
-#dutil.to_file(titles, 'titles.txt')
-assert len(titles) == len(categories), 'Not match each length'
+dataset = load.load_dataset(FILENAME)
 
-tensor, config = preprocess.tokenize(titles)
+tensor, config = preprocess.tokenize(dataset['titles'].to_list())
 
 # split and shuffle dataset
-X_train, X_test, Y_train, Y_test = preprocess.split_dataset(tensor, categories)
+X_train, X_test, Y_train, Y_test = preprocess.split_dataset(tensor, dataset['labels'].to_list())
 
 # make dataset pairs (title, category)
 train_dataset = tf.data.Dataset.from_tensor_slices((X_train, Y_train))
 test_dataset = tf.data.Dataset.from_tensor_slices((X_test, Y_test))
 
 # split dataset to batches
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 train_dataset = train_dataset.batch(BATCH_SIZE)
 test_dataset = test_dataset.batch(BATCH_SIZE)
 
