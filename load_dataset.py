@@ -3,6 +3,7 @@ import pandas as pd
 import collections
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+import string
 
 def read_dataset(filename):
     '''read dataset file
@@ -86,6 +87,9 @@ def load_dataset(filename):
 
     # remove duplication by title
     dataset.drop_duplicates(subset='titles', keep='first',inplace=True)
+
+    # remove punctuations
+    dataset['titles'] = dataset['titles'].str.translate(str.maketrans( '', '',string.punctuation + "’‘"))
 
     # adjust each label to be same length
     dataset = adjust_dataset_length(dataset)

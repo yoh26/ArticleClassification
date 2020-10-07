@@ -12,7 +12,7 @@ ToDo
 #FILENAME = 'Dataset.txt'
 FILENAME = 'Dataset_without_general.txt'
 dataset = load.load_dataset(FILENAME)
-
+#dutil.dataflame_to_file(dataset, 'Dataset_stopwords_han.txt')
 tensor, config = preprocess.tokenize(dataset['titles'].to_list())
 
 # split and shuffle dataset
