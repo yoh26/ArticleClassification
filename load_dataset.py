@@ -88,6 +88,9 @@ def load_dataset(filename):
     # remove duplication by title
     dataset.drop_duplicates(subset='titles', keep='first',inplace=True)
 
+    # remove 's
+    dataset['titles'] = dataset['titles'].replace("'s", '', regex=True)
+    
     # remove punctuations
     dataset['titles'] = dataset['titles'].str.translate(str.maketrans( '', '',string.punctuation + "’‘"))
 
