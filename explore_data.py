@@ -140,6 +140,18 @@ def export_dataset_without_general_title(titles, labels):
         cat_dataset = dataset['titles'].str.cat(dataset['labels'].astype('str'), sep=' ').to_list()
         f.write('\n'.join(cat_dataset))
 
+def print_tensor_length_distribution(tensor):
+    '''print distribution of tensor length
+
+    # Argument
+        tensor: ndarray, numerical vectors
+    '''
+    # count words in each tensor
+    tensor_length = [len(wc[wc != 0]) for wc in tensor]
+    counter = collections.Counter(tensor_length)
+    sorted_counter = counter.most_common(30)
+    print(sorted_counter)
+
 # function --------------------------------------------------------------
 
 titles, labels = read_dataset('Dataset.txt')

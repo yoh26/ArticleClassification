@@ -4,21 +4,17 @@ import load_dataset as load
 import preprocess
 from categorizing_model import CModel
 import debug_util as dutil
-'''
-ToDo
-シンプルなモデルを試す
-'''
+
 # load dataset
 #FILENAME = 'Dataset.txt'
 FILENAME = 'Dataset_without_general.txt'
 dataset = load.load_dataset(FILENAME)
-#dutil.dataflame_to_file(dataset, 'Dataset_stopwords_han.txt')
 tensor, config = preprocess.tokenize(dataset['titles'].to_list())
 
 # split and shuffle dataset
 X_train, X_test, Y_train, Y_test = preprocess.split_dataset(tensor, dataset['labels'].to_list())
 
-# make dataset pairs (title, category)
+# make dataset pairs (title, labels)
 train_dataset = tf.data.Dataset.from_tensor_slices((X_train, Y_train))
 test_dataset = tf.data.Dataset.from_tensor_slices((X_test, Y_test))
 
@@ -31,10 +27,14 @@ test_dataset = test_dataset.batch(BATCH_SIZE)
 index_word = preprocess.convert_to_dict(config, 'index_word')
 word_index = preprocess.convert_to_dict(config, 'word_index')
 
-model = CModel(len(index_word), 32)
+HIDDEN_UNITS = 32
+FINAL_OUTPUT_UNITS = 6
+EPOCHS = 10
+
+model = CModel(len(index_word), HIDDEN_UNITS, FINAL_OUTPUT_UNITS)
 model.assemble()
 model.compile()
-history = model.fit(train_dataset, test_dataset)
+history = model.fit(train_dataset, test_dataset, EPOCHS)
 test_loss, test_acc = model.evaluate()
 print(test_loss)
 print(test_acc)

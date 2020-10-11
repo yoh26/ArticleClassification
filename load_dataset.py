@@ -94,8 +94,9 @@ def load_dataset(filename):
     # remove punctuations
     dataset['titles'] = dataset['titles'].str.translate(str.maketrans( '', '',string.punctuation + "’‘"))
 
+    # データ数を減らさないほうが良い結果が出る
     # adjust each label to be same length
-    dataset = adjust_dataset_length(dataset)
+    #dataset = adjust_dataset_length(dataset)
 
     # to lowercase
     dataset['titles'] = dataset['titles'].str.lower()
