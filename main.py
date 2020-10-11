@@ -19,19 +19,21 @@ train_dataset = tf.data.Dataset.from_tensor_slices((X_train, Y_train))
 test_dataset = tf.data.Dataset.from_tensor_slices((X_test, Y_test))
 
 # split dataset to batches
-BATCH_SIZE = 32
+BATCH_SIZE = 64
 train_dataset = train_dataset.batch(BATCH_SIZE)
 test_dataset = test_dataset.batch(BATCH_SIZE)
-
 # word and index mapping dictionaries
 index_word = preprocess.convert_to_dict(config, 'index_word')
 word_index = preprocess.convert_to_dict(config, 'word_index')
 
-HIDDEN_UNITS = 32
+HIDDEN_UNITS = 256
 FINAL_OUTPUT_UNITS = 6
-EPOCHS = 10
+EPOCHS = 50
+DROPOUT_RATE = 0.4
+DENSE_LAYERS = 2
+L2_RATE = 0.01
 
-model = CModel(len(index_word), HIDDEN_UNITS, FINAL_OUTPUT_UNITS)
+model = CModel(len(index_word), HIDDEN_UNITS, FINAL_OUTPUT_UNITS, DROPOUT_RATE, DENSE_LAYERS, L2_RATE)
 model.assemble()
 model.compile()
 history = model.fit(train_dataset, test_dataset, EPOCHS)

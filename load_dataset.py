@@ -109,6 +109,6 @@ def load_dataset(filename):
 
     # remove over max length titles
     MAX_LEN = 20
-    dataset = dataset[dataset.titles.str.len() >= MAX_LEN]
+    dataset = dataset[dataset.titles.str.split().str.len() <= MAX_LEN]
 
     return dataset

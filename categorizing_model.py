@@ -1,10 +1,13 @@
 import tensorflow as tf
 
 class CModel():
-    def __init__(self, vocab_size, hidden_units, final_output_units):
+    def __init__(self, vocab_size, hidden_units, final_output_units, dropout_rate, dense_layers, l2_rate):
         self.vocab_size = vocab_size + 1
         self.hidden_units = hidden_units
         self.final_output_units = final_output_units
+        self.dropout_rate = dropout_rate
+        self.dense_layers = dense_layers
+        self.l2_rate = l2_rate
 
     def assemble(self):
         model = tf.keras.Sequential()
@@ -13,9 +16,10 @@ class CModel():
         #model.add(tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(self.hidden_units)))
         #GlobalAveragePooling1Dのほうが性能よかった
         model.add(tf.keras.layers.GlobalAveragePooling1D())
-        model.add(tf.keras.layers.Dropout(0.2))
-        model.add(tf.keras.layers.Dense(self.hidden_units, activation='relu'))
-        model.add(tf.keras.layers.Dropout(0.2))
+        model.add(tf.keras.layers.Dropout(self.dropout_rate))
+        for _ in range(self.dense_layers):
+            model.add(tf.keras.layers.Dense(self.hidden_units, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(self.l2_rate)))
+            model.add(tf.keras.layers.Dropout(self.dropout_rate))
         model.add(tf.keras.layers.Dense(self.final_output_units, activation='softmax'))
         '''
         過学習している!!
