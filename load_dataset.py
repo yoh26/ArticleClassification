@@ -107,4 +107,8 @@ def load_dataset(filename):
     # remove stopwords
     remove_stopwords(dataset)
 
+    # remove over max length titles
+    MAX_LEN = 20
+    dataset = dataset[dataset.titles.str.len() >= MAX_LEN]
+
     return dataset
