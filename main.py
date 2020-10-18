@@ -9,6 +9,7 @@ import debug_util as dutil
 #FILENAME = 'Dataset.txt'
 FILENAME = 'Dataset_without_general.txt'
 dataset = load.load_dataset(FILENAME)
+
 tensor, config = preprocess.tokenize(dataset['titles'].to_list())
 
 # split and shuffle dataset
@@ -26,11 +27,11 @@ test_dataset = test_dataset.batch(BATCH_SIZE)
 index_word = preprocess.convert_to_dict(config, 'index_word')
 word_index = preprocess.convert_to_dict(config, 'word_index')
 
-HIDDEN_UNITS = 256
+HIDDEN_UNITS = 16
 FINAL_OUTPUT_UNITS = 6
 EPOCHS = 50
-DROPOUT_RATE = 0.4
-DENSE_LAYERS = 2
+DROPOUT_RATE = 0.2
+DENSE_LAYERS = 1
 L2_RATE = 0.01
 
 model = CModel(len(index_word), HIDDEN_UNITS, FINAL_OUTPUT_UNITS, DROPOUT_RATE, DENSE_LAYERS, L2_RATE)

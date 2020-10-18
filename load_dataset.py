@@ -31,56 +31,49 @@ def read_dataset(filename):
                             })
     return dataset
 
-def adjust_dataset_length(dataset):
-    '''adjust dataset length to minimum label counts
-
-    # Arguments
-        dataset: Dataflame, titles and labels
-
-    # Returns
-        adjusted_dataset: Dataflame, titles adn labels
-    '''
-    # count labels
-    label_counts = dataset['labels'].value_counts(ascending=True)
-
-    minimum_label_counts = label_counts.iloc[0]
-
-    # set the seed
-    np.random.seed(42)
-
-    # choose same minimum_label_counts from each label
-    l_0 = dataset[dataset.labels == 0].sample(n=minimum_label_counts)
-    l_1 = dataset[dataset.labels == 1].sample(n=minimum_label_counts)
-    l_2 = dataset[dataset.labels == 2].sample(n=minimum_label_counts)
-    l_3 = dataset[dataset.labels == 3].sample(n=minimum_label_counts)
-    l_4 = dataset[dataset.labels == 4].sample(n=minimum_label_counts)
-    l_5 = dataset[dataset.labels == 5].sample(n=minimum_label_counts)
-
-    adjusted_dataset = pd.concat([l_0, l_1, l_2, l_3, l_4, l_5])
-
-    return adjusted_dataset
-
 def remove_stopwords(dataset):
     '''remove stopwords from titles
 
     # Argument
+        dataset = Dataflame, titles and labels
+
+    # Return
         dataset = Dataflame, titles and labels
     '''
     # get stopwords
     stop_words = set(stopwords.words('english'))
 
     removed_stopwords_titles = []
+    removed_stopwords_labels = []
 
     # remove stopwords
     titles = dataset['titles'].to_list()
-    for title in titles:
+    labels = dataset['labels'].to_list()
+    for title, label in zip(titles, labels):
         word_tokens = word_tokenize(title)
         removed_stopwords_title = [w for w in word_tokens if not w in stop_words]
         removed_stopwords_titles.append(' '.join(removed_stopwords_title))
+        removed_stopwords_labels.append(label)
 
-    dataset['titles'] = pd.Series(removed_stopwords_titles)
+    removed_stopwords_dataset = pd.DataFrame({'titles': removed_stopwords_titles,
+                                              'labels': removed_stopwords_labels
+                                             })
 
-    dataset.dropna(inplace=True)
+    removed_stopwords_dataset.dropna(inplace=True)
+
+    return removed_stopwords_dataset
+
+def remove_health_data(dataset):
+    '''
+    healthデータが他のデータに比べて少ないのでhealthデータを削除して学習してみる
+    '''
+    dataset = dataset[dataset.labels != 3]
+    # dataset.replace({'labels': {4:3}}, inplace=True)
+    # dataset.replace({'labels': {5:4}}, inplace=True)
+    dataset = dataset.replace({'labels': {4:3}})
+    dataset = dataset.replace({'labels': {5:4}})
+
+    return dataset
 
 def load_dataset(filename):
     dataset = read_dataset(filename)
@@ -88,15 +81,11 @@ def load_dataset(filename):
     # remove duplication by title
     dataset.drop_duplicates(subset='titles', keep='first',inplace=True)
 
-    # remove 's
+    # remove "'s"
     dataset['titles'] = dataset['titles'].replace("'s", '', regex=True)
     
     # remove punctuations
     dataset['titles'] = dataset['titles'].str.translate(str.maketrans( '', '',string.punctuation + "’‘"))
-
-    # データ数を減らさないほうが良い結果が出る
-    # adjust each label to be same length
-    #dataset = adjust_dataset_length(dataset)
 
     # to lowercase
     dataset['titles'] = dataset['titles'].str.lower()
@@ -105,10 +94,12 @@ def load_dataset(filename):
     dataset['titles'] = dataset['titles'].replace('[0-9]', '0', regex=True)
 
     # remove stopwords
-    remove_stopwords(dataset)
+    dataset = remove_stopwords(dataset)
 
     # remove over max length titles
     MAX_LEN = 20
     dataset = dataset[dataset.titles.str.split().str.len() <= MAX_LEN]
+
+    #dataset = remove_health_data(dataset)
 
     return dataset
