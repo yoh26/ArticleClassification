@@ -11,11 +11,10 @@ newsapi = NewsApiClient(api_key=apikey)
 # Category dictionary
 categories_dict = {'business':'0',
                    'entertainment':'1',
-                   'general':'2',
-                   'health':'3',
-                   'science':'4',
-                   'sports':'5',
-                   'technology':'6'}
+                   'health':'2',
+                   'science':'3',
+                   'sports':'4',
+                   'technology':'5'}
 
 # Create a news title dataset
 # Get top headlines by each category
