@@ -13,7 +13,7 @@ def tokenize(titles):
 
     '''
     # initialize Tokenizer
-    tokenizer = tf.keras.preprocessing.text.Tokenizer(filters='', document_count=2, oov_token='<UNK>')
+    tokenizer = tf.keras.preprocessing.text.Tokenizer(filters='')
     tokenizer.fit_on_texts(titles)
 
     # create tensor and padding
