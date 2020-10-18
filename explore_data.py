@@ -121,25 +121,6 @@ def adjust_dataset_length(titles, labels):
 
     return adjusted_titles, adjusted_labels
 
-def export_dataset_without_general_title(titles, labels):
-    '''
-    label2(general)データ以外をファイル出力する
-    ## この関数は最後に削除すること ##
-    '''
-    with open('Dataset_without_general.txt', mode='w') as f:
-        dataset = pd.DataFrame({'titles': titles,
-                                'labels': labels
-                                })
-    
-        dataset = dataset[dataset.labels != 2]
-        dataset.replace({'labels': {3:2}}, inplace=True)
-        dataset.replace({'labels': {4:3}}, inplace=True)
-        dataset.replace({'labels': {5:4}}, inplace=True)
-        dataset.replace({'labels': {6:5}}, inplace=True)
-
-        cat_dataset = dataset['titles'].str.cat(dataset['labels'].astype('str'), sep=' ').to_list()
-        f.write('\n'.join(cat_dataset))
-
 def print_tensor_length_distribution(tensor):
     '''print distribution of tensor length
 
@@ -163,4 +144,3 @@ titles, labels = read_dataset('Dataset.txt')
 #print(sorted(collections.Counter(labels).items()))
 #plot_word_count_distribution(titles)
 #titles, labels = adjust_dataset_length(titles, labels)
-#export_dataset_without_general_title(titles, labels)
