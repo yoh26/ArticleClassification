@@ -27,16 +27,21 @@ test_dataset = test_dataset.batch(BATCH_SIZE)
 index_word = preprocess.convert_to_dict(config, 'index_word')
 word_index = preprocess.convert_to_dict(config, 'word_index')
 
-HIDDEN_UNITS = 16
+HIDDEN_UNITS = 64
 FINAL_OUTPUT_UNITS = 6
-EPOCHS = 50
-DROPOUT_RATE = 0.2
+DROPOUT_RATE = 0.4
 DENSE_LAYERS = 1
 L2_RATE = 0.01
+LEARNING_RATE = 1e-4
+EPOCHS = 50
 
-model = CModel(len(index_word), HIDDEN_UNITS, FINAL_OUTPUT_UNITS, DROPOUT_RATE, DENSE_LAYERS, L2_RATE)
-model.assemble()
-model.compile()
+model = CModel(len(index_word),
+               HIDDEN_UNITS,
+               FINAL_OUTPUT_UNITS,
+               DROPOUT_RATE,
+               DENSE_LAYERS,
+               L2_RATE)
+model.compile(LEARNING_RATE)
 history = model.fit(train_dataset, test_dataset, EPOCHS)
 test_loss, test_acc = model.evaluate()
 print(test_loss)

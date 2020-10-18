@@ -9,27 +9,22 @@ class CModel():
         self.dense_layers = dense_layers
         self.l2_rate = l2_rate
 
-    def assemble(self):
+        # assemble model
         model = tf.keras.Sequential()
-        # (batch_size, input_length) = (64, 1データの長さ)
         model.add(tf.keras.layers.Embedding(self.vocab_size, self.hidden_units, mask_zero=True))
-        #model.add(tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(self.hidden_units)))
-        #GlobalAveragePooling1Dのほうが性能よかった
         model.add(tf.keras.layers.GlobalAveragePooling1D())
         model.add(tf.keras.layers.Dropout(self.dropout_rate))
         for _ in range(self.dense_layers):
             model.add(tf.keras.layers.Dense(self.hidden_units, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(self.l2_rate)))
             model.add(tf.keras.layers.Dropout(self.dropout_rate))
         model.add(tf.keras.layers.Dense(self.final_output_units, activation='softmax'))
-        '''
-        過学習している!!
-        '''
 
         self.model = model
 
-    def compile(self):
+    def compile(self, learning_rate):
+        self.learning_rate = learning_rate
         self.model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                           optimizer=tf.keras.optimizers.Adam(1e-4),
+                           optimizer=tf.keras.optimizers.Adam(self.learning_rate),
                            metrics=['accuracy'])
 
     def fit(self, train_dataset, test_dataset, epochs):
