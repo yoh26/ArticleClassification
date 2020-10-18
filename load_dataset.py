@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import collections
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import string
@@ -38,7 +37,7 @@ def remove_stopwords(dataset):
         dataset = Dataflame, titles and labels
 
     # Return
-        dataset = Dataflame, titles and labels
+        removed_stopwords_dataset = Dataflame, titles and labels
     '''
     # get stopwords
     stop_words = set(stopwords.words('english'))
@@ -63,19 +62,15 @@ def remove_stopwords(dataset):
 
     return removed_stopwords_dataset
 
-def remove_health_data(dataset):
-    '''
-    healthデータが他のデータに比べて少ないのでhealthデータを削除して学習してみる
-    '''
-    dataset = dataset[dataset.labels != 3]
-    # dataset.replace({'labels': {4:3}}, inplace=True)
-    # dataset.replace({'labels': {5:4}}, inplace=True)
-    dataset = dataset.replace({'labels': {4:3}})
-    dataset = dataset.replace({'labels': {5:4}})
-
-    return dataset
-
 def load_dataset(filename):
+    '''load dataset
+
+    # Argument
+        filename: str, filename of dataset
+
+    # Return
+        dataset: Dataflame, titles and labels
+    '''
     dataset = read_dataset(filename)
 
     # remove duplication by title
@@ -99,7 +94,5 @@ def load_dataset(filename):
     # remove over max length titles
     MAX_LEN = 20
     dataset = dataset[dataset.titles.str.split().str.len() <= MAX_LEN]
-
-    #dataset = remove_health_data(dataset)
 
     return dataset
