@@ -4,6 +4,7 @@ import pandas as pd
 import load_dataset as load
 import preprocess
 from categorizing_model import CModel
+import plotting
 
 # load dataset
 FILENAME = 'Dataset.txt'
@@ -44,4 +45,6 @@ test_loss, test_acc = model.evaluate()
 print(test_loss)
 print(test_acc)
 
+# plot learning history
+#plotting.plot_history(history)
 s = input()
