@@ -85,7 +85,7 @@ def adjust_dataset_length(titles, labels):
 
     # Arguments
         titles: list, titles of dataset
-        labels: lest, labels of dataset
+        labels: list, labels of dataset
 
     # Returns
         adjusted_titles: list

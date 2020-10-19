@@ -5,11 +5,11 @@ import ast
 def tokenize(titles):
     '''convert to sequences (integer)
 
-    # Arguments
-    	titles = titles of dataset
+    # Argument
+        titles: list, titles of dataset
 
     # Returns
-        tensor:lists of sequences
+        tensor: list, sequences of integer
         vocab_size: int, vocabulary size
 
     '''
@@ -29,13 +29,13 @@ def tokenize(titles):
     return tensor, vocab_size
 
 def split_dataset(tensor, labels):
-    '''split dataset
+    '''split dataset to train and test dataset
 
     # Arguments
-    	tensor = converted matrix from titles
-        labels = list, labels of dataset
+        tensor: list, sequences of integer
+        labels: list, labels of dataset
 
-    # Returns
+    # Return
     	train and test dataset
     '''
     X_train, X_test, Y_train, Y_test = train_test_split(tensor, labels, train_size=0.8, random_state=42, shuffle=True)
