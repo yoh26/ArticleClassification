@@ -7,8 +7,7 @@ from categorizing_model import CModel
 import debug_util as dutil
 
 # load dataset
-#FILENAME = 'Dataset.txt'
-FILENAME = 'Dataset_without_general.txt'
+FILENAME = 'Dataset.txt'
 dataset = load.load_dataset(FILENAME)
 
 # tokenizing

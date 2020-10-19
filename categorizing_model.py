@@ -1,4 +1,6 @@
 import tensorflow as tf
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Embedding, GlobalAveragePooling1D, Dropout, Dense
 
 class CModel():
     def __init__(self, vocab_size, hidden_units, final_output_units, dropout_rate, dense_layers, l2_rate):
@@ -10,14 +12,14 @@ class CModel():
         self.l2_rate = l2_rate
 
         # assemble model
-        model = tf.keras.Sequential()
-        model.add(tf.keras.layers.Embedding(self.vocab_size, self.hidden_units, mask_zero=True))
-        model.add(tf.keras.layers.GlobalAveragePooling1D())
-        model.add(tf.keras.layers.Dropout(self.dropout_rate))
+        model = Sequential()
+        model.add(Embedding(self.vocab_size, self.hidden_units, mask_zero=True))
+        model.add(GlobalAveragePooling1D())
+        model.add(Dropout(self.dropout_rate))
         for _ in range(self.dense_layers):
-            model.add(tf.keras.layers.Dense(self.hidden_units, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(self.l2_rate)))
-            model.add(tf.keras.layers.Dropout(self.dropout_rate))
-        model.add(tf.keras.layers.Dense(self.final_output_units, activation='softmax'))
+            model.add(Dense(self.hidden_units, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(self.l2_rate)))
+            model.add(Dropout(self.dropout_rate))
+        model.add(Dense(self.final_output_units, activation='softmax'))
 
         self.model = model
 
@@ -33,8 +35,8 @@ class CModel():
         self.epochs = epochs
 
         history = self.model.fit(self.train_dataset, epochs=self.epochs,
-                            validation_data=self.test_dataset,
-                            validation_steps=30)
+                                 validation_data=self.test_dataset,
+                                 validation_steps=30)
 
         self.history = history
 
