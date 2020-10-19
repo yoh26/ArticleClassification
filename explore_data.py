@@ -11,7 +11,7 @@ def read_dataset(filename):
     # Argument
         filename: str, filename of dataset
 
-    # Return
+    # Returns
         titles: list, titles of dataset
         labels: list, categories of titles
     '''
@@ -39,7 +39,7 @@ def plot_title_length_distribution(titles, bins):
         bins: int, number of bins
     '''
     plt.hist([len(s.split()) for s in titles], bins=bins)
-    plt.xlabel('length of a title')
+    plt.xlabel('Length of a title')
     plt.ylabel('Number of titles')
     plt.title('Title length distribution')
     plt.show()
@@ -80,47 +80,6 @@ def plot_word_count_distribution(titles):
     plt.xticks(rotation=45)
     plt.show()
 
-def adjust_dataset_length(titles, labels):
-    '''adjust dataset length to minimum label counts
-
-    # Arguments
-        titles: list, titles of dataset
-        labels: list, labels of dataset
-
-    # Returns
-        adjusted_titles: list
-        adjusted_labels: list
-    '''
-    dataset = pd.DataFrame({'titles': titles,
-                            'labels': labels
-                            })
-    # remove general news
-    dataset = dataset[dataset.labels != 2]
-    # remove duplications titles
-    dataset.drop_duplicates(subset='titles', keep='first',inplace=True)
-
-    # count labels
-    label_counts = dataset['labels'].value_counts(ascending=True)
-
-    minimum_label_counts = label_counts.iloc[0]
-
-    np.random.seed(42)
-    # choose same minimum_label_counts from each label
-    l_0 = dataset[dataset.labels == 0].sample(n=minimum_label_counts)
-    l_1 = dataset[dataset.labels == 1].sample(n=minimum_label_counts)
-    l_3 = dataset[dataset.labels == 3].sample(n=minimum_label_counts)
-    l_4 = dataset[dataset.labels == 4].sample(n=minimum_label_counts)
-    l_5 = dataset[dataset.labels == 5].sample(n=minimum_label_counts)
-    l_6 = dataset[dataset.labels == 6].sample(n=minimum_label_counts)
-
-    dataset = pd.concat([l_0, l_1, l_3, l_4, l_5, l_6])
-    dataset = dataset.reset_index(drop=True)
-
-    adjusted_titles = dataset['titles'].values.tolist()
-    adjusted_labels = dataset['labels'].values.tolist()
-
-    return adjusted_titles, adjusted_labels
-
 def print_tensor_length_distribution(tensor):
     '''print distribution of tensor length
 
@@ -142,5 +101,5 @@ titles, labels = read_dataset('Dataset.txt')
 
 # print each number of labels
 #print(sorted(collections.Counter(labels).items()))
+
 #plot_word_count_distribution(titles)
-#titles, labels = adjust_dataset_length(titles, labels)
