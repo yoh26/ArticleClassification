@@ -4,14 +4,13 @@ import pandas as pd
 import load_dataset as load
 import preprocess
 from categorizing_model import CModel
-import debug_util as dutil
 
 # load dataset
 FILENAME = 'Dataset.txt'
 dataset = load.load_dataset(FILENAME)
 
-# tokenizing
-tensor, VOCAB_SIZE = preprocess.tokenize(dataset['titles'].to_list())
+# tokenize titles
+tensor, vocab_size = preprocess.tokenize(dataset['titles'].to_list())
 
 # split and shuffle dataset
 X_train, X_test, Y_train, Y_test = preprocess.split_dataset(tensor, dataset['labels'].to_list())
@@ -33,7 +32,7 @@ L2_RATE = 0.01
 LEARNING_RATE = 1e-4
 EPOCHS = 50
 
-model = CModel(VOCAB_SIZE,
+model = CModel(vocab_size,
                HIDDEN_UNITS,
                FINAL_OUTPUT_UNITS,
                DROPOUT_RATE,
