@@ -47,4 +47,3 @@ print(test_acc)
 
 # plot learning history
 #plotting.plot_history(history)
-s = input()
