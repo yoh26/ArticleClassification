@@ -1,5 +1,3 @@
-# ArticleClassification
-
 ## 概要
 
 ニュースタイトルからニュースのカテゴリ分けを行う
@@ -25,17 +23,12 @@
 
 ○データ例
 
-> Omaha’s megabillionaire down the street — Warren Buffett — set to celebrate his 90th birthday 0
-
-> Prince Harry, Meghan Markle have received millions of dollars in gifts: Book 1
-
-> This Beloved Tourist Destination Has Become a COVID Superspreader 2
-
-> An Asteroid Is Headed for Earth Just Before Election Day 3
-
-> LIVE: Coman Heads Bayern Munich Ahead of PSG in Champions League Final 4
-
-> SpaceX Crew Dragon capsule arrives in Florida for next NASA astronaut launch 5
+> Omaha’s megabillionaire down the street — Warren Buffett — set to celebrate his 90th birthday 0<br>
+Prince Harry, Meghan Markle have received millions of dollars in gifts: Book 1<br>
+This Beloved Tourist Destination Has Become a COVID Superspreader 2<br>
+An Asteroid Is Headed for Earth Just Before Election Day 3<br>
+LIVE: Coman Heads Bayern Munich Ahead of PSG in Champions League Final 4<br>
+SpaceX Crew Dragon capsule arrives in Florida for next NASA astronaut launch 5<br>
 
 
 ### 2. データ下準備
@@ -66,8 +59,14 @@
 
 ### 3. モデル構築
 
-モデル構築には、Tensolflow.kerasのSequentialモデルを使用
+モデル構築にはTensorflow.kerasのSequentialモデルを使用
 
 ### 4. 評価
 
 ○学習結果
+
+Loss: 0.57430499792099
+
+Accuracy: 0.8771112561225891
+
+![Loss_Accuracy](https://user-images.githubusercontent.com/69742531/96570950-eb659780-1305-11eb-8939-ecca360ce4f6.png)
