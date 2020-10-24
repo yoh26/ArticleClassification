@@ -1,3 +1,77 @@
+To Japanese description
+
+## Overview
+
+ArticleClassification categorizes news titles.
+
+## Details
+
+### 1. Collecting data
+
+News titles are collected from [News API](https://newsapi.org/).
+
+The following labels are appended to news titles, then write in **Dataset.txt**.
+
+○labels
+
+|Categories|Labels|
+|--------|------|
+|business|0|
+|entertainment|1|
+|health|2|
+|science|3|
+|sports|4|
+|technology|5|
+
+○Data examples
+
+> Omaha’s megabillionaire down the street — Warren Buffett — set to celebrate his 90th birthday 0<br>
+Prince Harry, Meghan Markle have received millions of dollars in gifts: Book 1<br>
+This Beloved Tourist Destination Has Become a COVID Superspreader 2<br>
+An Asteroid Is Headed for Earth Just Before Election Day 3<br>
+LIVE: Coman Heads Bayern Munich Ahead of PSG in Champions League Final 4<br>
+SpaceX Crew Dragon capsule arrives in Florida for next NASA astronaut launch 5<br>
+
+
+### 2. Preprocessing data
+
+1. Remove duplication
+
+   There are some duplication in Dataset. It needs to remove duplication.
+
+2. Remove punctuation
+
+3. Change to lowercase
+
+4. Change all numbers to 0
+
+5. Remove Stopwords
+
+6. Remove over max length data
+
+7. Change to num vectors and 0 pad
+
+8. Split data
+
+   Split dataset to train dataset and validation dataset
+
+9. Split data to batches
+
+### 3. Assemble model
+
+The model is assembled by Sequential model of Tensorflow.keras.
+
+### 4. Evaluate
+
+○Result
+
+Loss: 0.57430499792099
+
+Accuracy: 0.8771112561225891
+
+![Loss_Accuracy](https://user-images.githubusercontent.com/69742531/96570950-eb659780-1305-11eb-8939-ecca360ce4f6.png)
+
+
 ## 概要
 
 ニュースタイトルからニュースのカテゴリ分けを行う
