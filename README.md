@@ -1,6 +1,4 @@
-To Japanese description
-
-[To Japanese description](https://github.com/yoh26/ArticleClassification/tree/modify/README#overview)
+[To Japanese description](https://github.com/yoh26/ArticleClassification/tree/modify/README#%E6%A6%82%E8%A6%81)
 
 ## Overview
 
